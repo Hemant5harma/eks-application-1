@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eks1
+  namespace: ingress-nm
+  labels:
+    app: eks1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eks1
+  template:
+    metadata:
+      labels:
+        app: eks1
+    spec:
+      containers:
+        - name: eks1-container
+          image: hemanthub/eks-application-1:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
