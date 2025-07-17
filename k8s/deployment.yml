@@ -20,4 +20,4 @@ spec:
           image: hemanthub/eks-application-1:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
