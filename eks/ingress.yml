@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-eks
+  namespace: ingress-nm
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/issuer: letsencrypt-prod
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - hemant5harma.tech
+        - www.hemant5harma.tech
+      secretName: hemant5harma-tls
+  rules:
+    - host: hemant5harma.tech
+      http:
+        paths:
+          - path: /node
+            pathType: Prefix
+            backend:
+              service:
+                name: eks2-service
+                port:
+                  number: 80
+          - path: /go
+            pathType: Prefix
+            backend:
+              service:
+                name: eks1-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eks3-service
+                port:
+                  number: 80
+    - host: www.hemant5harma.tech
+      http:
+        paths:
+          - path: /node
+            pathType: Prefix
+            backend:
+              service:
+                name: eks2-service
+                port:
+                  number: 80
+          - path: /go
+            pathType: Prefix
+            backend:
+              service:
+                name: eks1-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: eks3-service
+                port:
+                  number: 80
